@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html data-ng-app="MyApp">
+<head>
+  <link data-require="jquery-ui@*" data-semver="1.11.2" rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
+  <link data-require="bootstrap@*" data-semver="4.0.0-alpha.2" rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" />
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <h1>Nested JSON!</h1>
+
+  <div class="ng-cloak ng-controller" data-ng-controller="MainController">
+    <form method="POST" action="" name="form" class="" id="myForm" data-ng-submit="submitForm(form.$valid)" autocomplete="off" accept-charset="UTF-8" role="form" novalidate>
+      <div data-ng-repeat="list in team track by $index" data-ng-if="$first">
+        <div data-ng-show="additionalInfo">
+          <div class="first-user list" data-ng-class="{'has-error' : form.name.$invalid && !form.name.$pristine}">
+            <label for="name" class="label">Name</label>
+            <input type="text" name="name" id="name" data-ng-required="true" data-ng-model="list[$index].name" />
+            <p ng-show="form.name.$error.required && !form.name.$pristine" class="help-block">Your name is required.</p>
+          </div>
+          <div class="first-user" data-ng-class="{ 'has-error':form.phone.$invalid && !form.phone.$pristine}">
+            <label for="phone" class="label">Phone</label>
+            <input type="tel" name="phone" data-ng-minlength="10" data-ng-maxlength="15" id="phone" data-ng-required="true" data-ng-model="list[$index].phone" />
+            <p ng-show="form.phone.$error.required && !form.phone.$pristine" class="help-block">Your phone is required.</p>
+            <p data-ng-show="form.phone.$error.minlength" class="help-block">Your phone number is too short.</p>
+            <p data-ng-show="form.phone.$error.maxlength" class="help-block">Your phone number is too long.</p>
+          </div>
+          <div class="first-user" ng-class="{'has-error':form.email.$invalid && !form.email.$pristine}">
+            <label for="email" class="label">Email</label>
+            <input type="email" name="email" id="email" data-ng-required="true" data-ng-model="list[$index].email" />
+            <p ng-show="form.email.$error.required && !form.email.$pristine" class="help-block">Your email is required.</p>
+          </div>
+          <div class="first-user address" id="locationField" data-ng-class="{'has-error' : form.address.$invalid && !form.address.$pristine}">
+            <label class="label" for="address">Address</label>
+            <input vs-google-autocomplete type="text" class="address form-control" placeholder="Please enter your address" name="address" id="address" data-ng-required="true" data-ng-model="list[$index].address" />
+            <p ng-show="form.address.$error.required && !form.address.$pristine" class="help-block">Please provide your address.</p>
+          </div>
+          <!--/ .first-user -->
+        </div>
+        <!-- additionalInfo -->
+        <div data-ng-if="$index === 0">
+          <div data-ng-repeat="employee in employees track by $index" data-ng-if="employeeRecord">
+            <div class="first-user list" data-ng-class="{'has-error' : form.name.$invalid && !form.name.$pristine}">
+              <label for="name" class="label">Name</label>
+              <input type="text" name="name" id="name" data-ng-model="list[$index + 1].name" data-ng-required="true" />
+              <p ng-show="form.name.$error.required && !form.name.$pristine" class="help-block">Your name is required.</p>
+            </div>
+            <div class="first-user" data-ng-class="{ 'has-error':form.phone.$invalid && !form.phone.$pristine}">
+              <label for="phone" class="label">Phone</label>
+              <input type="tel" name="phone" data-ng-model="list[$index + 1].phone" data-ng-minlength="10" data-ng-maxlength="15" id="phone" data-ng-required="true" />
+              <p ng-show="form.phone.$error.required && !form.phone.$pristine" class="help-block">Your phone is required.</p>
+              <p data-ng-show="form.phone.$error.minlength" class="help-block">Your phone number is too short.</p>
+              <p data-ng-show="form.phone.$error.maxlength" class="help-block">Your phone number is too long.</p>
+            </div>
+            <div class="first-user" ng-class="{'has-error':form.email.$invalid && !form.email.$pristine}">
+              <label for="email" class="label">Email</label>
+              <input type="email" name="email" id="email" data-ng-required="true" data-ng-model="list[$index + 1].email" />
+              <p ng-show="form.email.$error.required && !form.email.$pristine" class="help-block">Your email is required.</p>
+            </div>
+            <div class="first-user address" id="locationField" data-ng-class="{'has-error' : form.address.$invalid && !form.address.$pristine}">
+              <label class="label" for="address">Address</label>
+              <input vs-google-autocomplete type="text" class="address form-control" placeholder="Please enter your address" name="address" id="address" data-ng-required="true" data-ng-model="list[$index + 1].address"  options="autocompleteOptions" />
+              <p ng-show="form.address.$error.required && !form.address.$pristine" class="help-block">Please provide your address.</p>
+            </div>
+            <!--/ .first-user -->
+          </div>
+        </div>
+      </div>
+      <!-- ng-repeat -->
+      <div id="addFeature">
+        <button class="btn red" type="button" data-ng-click="removeEmployee($last)" data-ng-show="removeButton" data-ng-model="removeButton">Remove Employee</button>
+        <button class="btn green" type="button" id="add_stop" data-ng-click="addEmployee(team)" ng-model="button">Add Employee</button>
+      </div>
+    </form>
+    {{team | json }}
+  </div>
+  <script data-require="jquery@*" data-semver="3.0.0" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+  <script data-require="jquery-ui@*" data-semver="1.11.2" src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+  <script data-require="angular.js@*" data-semver="2.0.0" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+  <script data-require="angular-route@*" data-semver="1.4.8" src="https://code.angularjs.org/1.4.8/angular-route.js"></script>
+  <script data-require="bootstrap@*" data-semver="4.0.0-alpha.2" src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+  <script data-require="modernizr@*" data-semver="2.6.2" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.js"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+/* Styles go here */
+label {
+  display: block;
+  position: relative;
+  text-align: left;
+  color: #444;
+}
+input {
+  border-radius: 2px;
+  box-shadow: none;
+  border: 1px solid #999;
+  width: 100%;
+  height: 35px;
+  padding-left: 15px;
+  color: #bbb;
+}
+.ng-cloak { display: none; }
+.ng-invalid.ng-dirty { color: red; }
+.fade.ng-enter.ng-enter-active { opacity:1; }
+.ng-invalid.ng-dirty { border-color: #eb99a0; }
+.ng-invalid.ng-dirty:focus {
+	border-color: #da4450;
+	background: #fceeef;
+}
+.ng-valid { 
+	color: #333; 
+	font-weight: 500;
+}
+.ng-invalid { 
+	color: #e30b25;
+	font-weight: 600;
+}
+.ng-pristine {}
+.ng-dirty {}
+.data-ng-touched {}
+.minlength { color: #e30b25; }
+.ng-invalid-required { 
+	color: red; 
+	font-weight: 600;
+}
+.ng-invalid-minlength { 
+	color: red;
+	font-weight: 600;
+}
+.ng-invalid-maxlength {
+	color: red;
+	font-weight: 600;
+}
+.ng-valid-max-length {
+	color: red;
+	font-weight: 600;
+}
+.red {
+  background-color: red;
+  color: white;
+}
+.green {
+  background-color: green;
+  color: white;
+}
+}
